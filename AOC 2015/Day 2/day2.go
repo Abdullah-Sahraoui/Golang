@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	content := strings.Split(string(file), "\r\n")
+	content := strings.Split(string(file), "\n")
 
 	var sliceString [][]string
 
@@ -25,11 +25,12 @@ func main() {
 	sliceInt := strToInt(sliceString)
 
 	fmt.Println(calcSA(sliceInt))
+	fmt.Println(calcRibbon(sliceInt))
 }
 
 func calcSA(s [][]int) int {
 	var sa int
-	var total int`
+	var total int
 	for _, child := range s {
 		// For the SURFACE AREA:
 		sa = (2 * (child[0]) * (child[1])) + (2 * (child[1]) * (child[2])) + (2 * (child[2]) * (child[0]))
@@ -60,7 +61,7 @@ func strToInt(s [][]string) [][]int {
 		for _, value := range sl {
 			conv, err := strconv.Atoi(value)
 			if err != nil {
-				fmt.Println("ERROR WITH THE value: ", value)
+				fmt.Println("ERROR WITH THE VALUE: ", value)
 				panic(err)
 			}
 			temp = append(temp, conv)
@@ -71,4 +72,19 @@ func strToInt(s [][]string) [][]int {
 	}
 
 	return slint
+}
+
+func calcRibbon(s [][]int) int {
+	var p int
+	var r int
+	var total int
+	for _, d := range s {
+		sort.Ints(d)
+		p = (2 * (d[0])) + (2 * (d[1]))
+		r = (d[0]) * (d[1]) * (d[2])
+		total = total + p + r
+		p, r = 0, 0
+	}
+
+	return total
 }
