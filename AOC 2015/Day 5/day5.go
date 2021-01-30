@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"regexp"
 	"strings"
 )
 
@@ -60,25 +61,11 @@ func nice3(s string) bool {
 	// 	"ab", "cd", "pq", "xy"
 	// are in the string.
 	for i := 1; i < len(string(s)); i++ {
-		c := string(s[i-1])
 
-		switch string(c) {
-		case "a":
-			if string(s[i]) == "b" {
-				return false
-			}
-		case "c":
-			if string(s[i]) == "d" {
-				return false
-			}
-		case "p":
-			if string(s[i]) == "q" {
-				return false
-			}
-		case "x":
-			if string(s[i]) == "y" {
-				return false
-			}
+		re := regexp.MustCompile(`ab|cd|pq|xy`)
+		reply := re.MatchString(string(s))
+		if reply {
+			return false
 		}
 	}
 	return true
